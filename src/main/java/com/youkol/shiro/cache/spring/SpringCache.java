@@ -1,10 +1,6 @@
 package com.youkol.shiro.cache.spring;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.shiro.cache.Cache;
@@ -12,7 +8,6 @@ import org.apache.shiro.cache.CacheException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache.ValueWrapper;
-import org.springframework.util.CollectionUtils;
 
 /**
  * Shiro中cache的spring-cache实现
@@ -102,11 +97,6 @@ public class SpringCache<K, V> implements Cache<K, V> {
     @Override
     public int size() {
         try {
-            if (cache.getNativeCache() instanceof net.sf.ehcache.Ehcache) {
-                net.sf.ehcache.Ehcache ehcache = (net.sf.ehcache.Ehcache) cache.getNativeCache();
-                return ehcache.getSize();
-            }
-
             throw new UnsupportedOperationException("invoke spring cache size method not supported");
         } catch (Throwable t) {
             throw new CacheException(t);
@@ -114,19 +104,8 @@ public class SpringCache<K, V> implements Cache<K, V> {
     }
 
     @Override
-    @SuppressWarnings({"unchecked"})
     public Set<K> keys() {
         try {
-            if (cache.getNativeCache() instanceof net.sf.ehcache.Ehcache) {
-                net.sf.ehcache.Ehcache ehcache = (net.sf.ehcache.Ehcache) cache.getNativeCache();
-                List<K> keys = ehcache.getKeys();
-                if (!CollectionUtils.isEmpty(keys)) {
-                    return Collections.unmodifiableSet(new LinkedHashSet<K>(keys));
-                } else {
-                    return Collections.emptySet();
-                }
-            }
-
             throw new UnsupportedOperationException("invoke spring cache keys method not supported");
         } catch (Throwable t) {
             throw new CacheException(t);
@@ -134,26 +113,8 @@ public class SpringCache<K, V> implements Cache<K, V> {
     }
 
     @Override
-    @SuppressWarnings({"unchecked"})
     public Collection<V> values() {
         try {
-            if (cache.getNativeCache() instanceof net.sf.ehcache.Ehcache) {
-                net.sf.ehcache.Ehcache ehcache = (net.sf.ehcache.Ehcache) cache.getNativeCache();
-                List<K> keys = ehcache.getKeys();
-                if (!CollectionUtils.isEmpty(keys)) {
-                    List<V> values = new ArrayList<V>(keys.size());
-                    for (K key : keys) {
-                        V value = get(key);
-                        if (value != null) {
-                            values.add(value);
-                        }
-                    }
-                    return Collections.unmodifiableList(values);
-                } else {
-                    return Collections.emptyList();
-                }
-            }
-
             throw new UnsupportedOperationException("invoke spring cache abstract values method not supported");
         } catch (Throwable t) {
             throw new CacheException(t);

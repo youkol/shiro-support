@@ -32,6 +32,7 @@
 
   <properties>
     <shiro.version>1.4.0</shiro.version>
+    <java-jwt.version>3.8.0</java-jwt.version>
   </properties>
 
   <dependencies>
@@ -43,6 +44,11 @@
     <dependency>
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-web</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.auth0</groupId>
+      <artifactId>java-jwt</artifactId>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -64,6 +70,12 @@
 
   <dependencyManagement>
     <dependencies>
+      <!-- JSON Web Token(JWT) -->
+      <dependency>
+        <groupId>com.auth0</groupId>
+        <artifactId>java-jwt</artifactId>
+        <version>${java-jwt.version}</version>
+      </dependency>
       <!-- Shiro security -->
       <dependency>
         <groupId>org.apache.shiro</groupId>
