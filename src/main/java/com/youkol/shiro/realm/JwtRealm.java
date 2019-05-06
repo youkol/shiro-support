@@ -51,11 +51,11 @@ public class JwtRealm extends AuthorizingRealm {
         }
 
         String upToken = jwtToken.getToken();
-        String username = (String)account.getPrincipal();
-        String password = (String)account.getCredentials();
+        String username = account.getUsername();
+        String password = account.getPassword();
         if (jwtUserService.validateToken(upToken, username, password)) {
             SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                username, upToken, getName());
+                jwtToken.getUsername(), upToken, getName());
             return authenticationInfo;
         }
         

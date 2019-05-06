@@ -1,11 +1,21 @@
 package com.youkol.shiro.service;
 
-import org.apache.shiro.authc.AuthenticationToken;
+import java.io.Serializable;
 
 /**
  * @author jackiea
  */
-public interface UserAccount extends AuthenticationToken {
+public interface UserAccount extends Serializable {
 
-    
+    String getUserId();
+
+    String getUsername();
+
+    String getPassword();
+
+    String getStatus();
+
+    boolean isCredentialsCorrect();
+
+    boolean isCredentialsExpired();
 }
