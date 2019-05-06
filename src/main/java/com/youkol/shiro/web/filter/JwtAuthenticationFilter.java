@@ -3,11 +3,11 @@ package com.youkol.shiro.web.filter;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.youkol.shiro.authc.IncorrectTokenException;
 import com.youkol.shiro.authc.JwtAuthenticationToken;
 import com.youkol.shiro.web.util.WebUtils;
 
@@ -16,10 +16,12 @@ import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author jackiea
  */
+@Slf4j
 @Setter
 @Getter
 public class JwtAuthenticationFilter extends BasicHttpAuthenticationFilter {
@@ -27,6 +29,8 @@ public class JwtAuthenticationFilter extends BasicHttpAuthenticationFilter {
     private String authcScheme = "BEARER";
 
     private String authzScheme = "BEARER";
+
+    private boolean ignoreOptionsRequest = true;
 
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
@@ -57,8 +61,30 @@ public class JwtAuthenticationFilter extends BasicHttpAuthenticationFilter {
             String[] result = {username, encoded};
             return result;
         } catch (JWTDecodeException ex) {
-            throw new IncorrectTokenException(ex);
+            log.error("Occur an error, when get username from the token.", ex);
+            // throw new IncorrectTokenException(ex);
+            String[] result = {null, encoded};
+            return result;
         }
+    }
+
+    /**
+     * 添加跨域支持
+     */
+    @Override
+    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+        httpResponse.setHeader("Access-control-Allow-Origin", httpRequest.getHeader("Origin"));
+        httpResponse.setHeader("Access-Control-Allow-Methods", httpRequest.getHeader("Access-Control-Request-Method"));
+        httpResponse.setHeader("Access-Control-Allow-Headers", httpRequest.getHeader("Access-Control-Request-Headers"));
+        if (this.isIgnoreOptionsRequest() && "OPTIONS".equalsIgnoreCase(httpRequest.getMethod())) {
+            httpResponse.setStatus(HttpServletResponse.SC_OK);
+            return false;
+        }
+
+        return super.preHandle(httpRequest, httpResponse);
     }
 
 }
