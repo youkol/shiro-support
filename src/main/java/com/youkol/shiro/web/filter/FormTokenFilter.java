@@ -33,8 +33,6 @@ public class FormTokenFilter extends FormAuthenticationFilter {
 
     private boolean ignoreOptionsRequest = true;
 
-    private String tokenUrl = "/authenticate";
-
     public FormTokenFilter() {
         super();
     }
