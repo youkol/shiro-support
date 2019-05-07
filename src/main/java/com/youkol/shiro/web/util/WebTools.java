@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
  * 
  * @author jackiea
  */
-public class WebUtils {
+public class WebTools {
 
     /**
      * 返回客户端请求IP地址

@@ -19,5 +19,7 @@ public class JwtUserAccount extends DefaultUserAccount {
     private static final long serialVersionUID = 1L;
 
     private String token;
+
+    private boolean tokenCorrect;
     
 }

@@ -9,10 +9,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.youkol.shiro.authc.JwtAuthenticationToken;
-import com.youkol.shiro.web.util.WebUtils;
+import com.youkol.shiro.web.util.WebTools;
 
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
+import org.apache.shiro.web.util.WebUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -49,7 +50,7 @@ public class JwtAuthenticationFilter extends BasicHttpAuthenticationFilter {
 
     @Override
     protected String getHost(ServletRequest request) {
-        return WebUtils.getRemoteAddr((HttpServletRequest) request);
+        return WebTools.getRemoteAddr(WebUtils.toHttp(request));
     }
 
     @Override
@@ -73,8 +74,8 @@ public class JwtAuthenticationFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        HttpServletRequest httpRequest = WebUtils.toHttp(request);
+        HttpServletResponse httpResponse = WebUtils.toHttp(response);
         httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
         httpResponse.setHeader("Access-control-Allow-Origin", httpRequest.getHeader("Origin"));
         httpResponse.setHeader("Access-Control-Allow-Methods", httpRequest.getHeader("Access-Control-Request-Method"));

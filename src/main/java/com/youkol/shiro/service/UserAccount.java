@@ -13,6 +13,8 @@ public interface UserAccount extends Serializable {
 
     String getPassword();
 
+    String getSalt();
+
     String getStatus();
 
     boolean isCredentialsCorrect();

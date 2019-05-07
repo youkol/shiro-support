@@ -2,39 +2,39 @@ package com.youkol.shiro.realm;
 
 import java.util.Set;
 
-import com.youkol.shiro.authc.IncorrectTokenException;
-import com.youkol.shiro.authc.JwtAuthenticationToken;
-import com.youkol.shiro.service.JwtUserService;
 import com.youkol.shiro.service.UserAccount;
+import com.youkol.shiro.service.UserService;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author jackiea
  */
-public class JwtRealm extends AuthorizingRealm {
+public class FormRealm extends AuthorizingRealm {
 
     @Autowired
-    private JwtUserService jwtUserService;
+    private UserService userService;
 
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token != null && token instanceof JwtAuthenticationToken;
+        return token != null && token instanceof UsernamePasswordToken;
     }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String username = (String)getAvailablePrincipal(principals);
-        Set<String> roles = jwtUserService.getRoles(username);
-        Set<String> perms = jwtUserService.getPermissions(username, roles);
+        Set<String> roles = userService.getRoles(username);
+        Set<String> perms = userService.getPermissions(username, roles);
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(roles);
@@ -44,23 +44,21 @@ public class JwtRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        JwtAuthenticationToken jwtToken = (JwtAuthenticationToken) token;
+        UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 
-        UserAccount account = jwtUserService.getUserAccount(jwtToken.getUsername());
+        UserAccount account = userService.getUserAccount(upToken.getUsername());
         if (account == null) {
             return null;
         }
 
-        String upToken = jwtToken.getToken();
         String username = account.getUsername();
         String password = account.getPassword();
-        if (jwtUserService.validateToken(upToken, username, password)) {
-            throw new IncorrectTokenException("Token incorrect.");
-        }
-
+        String salt = userService.getSalt(account);
+        ByteSource credentialsSalt = ByteSource.Util.bytes(salt);
+        
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                username, upToken, getName());
+                username, password, credentialsSalt, getName());
         return authenticationInfo;
     }
-    
+
 }

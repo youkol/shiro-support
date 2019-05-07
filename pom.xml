@@ -33,12 +33,17 @@
   <properties>
     <shiro.version>1.4.0</shiro.version>
     <java-jwt.version>3.8.0</java-jwt.version>
+    <jackson.version>2.9.8</jackson.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>com.auth0</groupId>
       <artifactId>java-jwt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -75,6 +80,13 @@
         <artifactId>java-jwt</artifactId>
         <version>${java-jwt.version}</version>
       </dependency>
+      <dependency>
+				<groupId>com.fasterxml.jackson</groupId>
+				<artifactId>jackson-bom</artifactId>
+				<version>${jackson.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
       <!-- Shiro security -->
       <dependency>
         <groupId>org.apache.shiro</groupId>
@@ -115,7 +127,7 @@
     </dependencies>
   </dependencyManagement>
 
-  <!-- <build>
+  <build>
     <sourceDirectory>${project.build.directory}/generated-sources/delombok</sourceDirectory>
     <testSourceDirectory>${project.build.directory}/generated-test-sources/delombok</testSourceDirectory>
     <plugins>
@@ -148,6 +160,6 @@
         </executions>
       </plugin>
     </plugins>
-  </build> -->
+  </build>
 
 </project>

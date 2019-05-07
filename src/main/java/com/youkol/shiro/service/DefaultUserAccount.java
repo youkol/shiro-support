@@ -24,6 +24,8 @@ public class DefaultUserAccount implements UserAccount {
 
     private String password;
 
+    private String salt;
+
     private String status;
 
     private boolean credentialsCorrect;

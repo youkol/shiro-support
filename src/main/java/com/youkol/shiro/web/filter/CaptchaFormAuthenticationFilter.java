@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.youkol.shiro.authc.CaptchaUsernamePasswordToken;
 import com.youkol.shiro.authc.IncorrectCaptchaException;
+import com.youkol.shiro.web.util.WebTools;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -91,7 +92,7 @@ public class CaptchaFormAuthenticationFilter extends FormAuthenticationFilter {
                                  ServletRequest request,
                                  ServletResponse response)
                           throws Exception {
-        if (com.youkol.shiro.web.util.WebUtils.isAjaxRequest(WebUtils.toHttp(request))) { // ajax request
+        if (WebTools.isAjaxRequest(WebUtils.toHttp(request))) { // ajax request
             return false;
         }
 
@@ -121,7 +122,7 @@ public class CaptchaFormAuthenticationFilter extends FormAuthenticationFilter {
                 //allow them to see the login page ;)
                 return true;
             }
-        } else if (com.youkol.shiro.web.util.WebUtils.isAjaxRequest(WebUtils.toHttp(request))) { // ajax request
+        } else if (WebTools.isAjaxRequest(WebUtils.toHttp(request))) { // ajax request
             if (log.isTraceEnabled()) {
                 log.trace("Attempting to access a path which requires authentication. Set the " +
                         "Authentication url [" + getLoginUrl() + "] in response.");
@@ -149,7 +150,7 @@ public class CaptchaFormAuthenticationFilter extends FormAuthenticationFilter {
 
     @Override
     protected String getHost(ServletRequest request) {
-        return com.youkol.shiro.web.util.WebUtils.getRemoteAddr(WebUtils.toHttp(request));
+        return WebTools.getRemoteAddr(WebUtils.toHttp(request));
     }
 
     /**
