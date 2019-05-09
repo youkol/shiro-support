@@ -54,7 +54,7 @@ public class JwtRealm extends AuthorizingRealm {
         String upToken = jwtToken.getToken();
         String username = account.getUsername();
         String password = account.getPassword();
-        if (jwtUserService.validateToken(upToken, username, password)) {
+        if (!jwtUserService.validateToken(upToken, username, password)) {
             throw new IncorrectTokenException("Token incorrect.");
         }
 
