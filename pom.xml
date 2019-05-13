@@ -128,8 +128,8 @@
   </dependencyManagement>
 
   <build>
-    <sourceDirectory>${project.build.directory}/generated-sources/delombok</sourceDirectory>
-    <testSourceDirectory>${project.build.directory}/generated-test-sources/delombok</testSourceDirectory>
+    <!-- <sourceDirectory>${project.build.directory}/generated-sources/delombok</sourceDirectory>
+    <testSourceDirectory>${project.build.directory}/generated-test-sources/delombok</testSourceDirectory> -->
     <plugins>
       <plugin>
         <groupId>org.projectlombok</groupId>
