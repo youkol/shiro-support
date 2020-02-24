@@ -5,16 +5,20 @@
   <parent>
     <groupId>com.youkol</groupId>
     <artifactId>youkol-parent</artifactId>
-    <version>1.1.0</version>
+    <version>2</version>
+    <relativePath />
   </parent>
 
-  <groupId>com.youkol.shiro</groupId>
-  <artifactId>youkol-support-shiro</artifactId>
+  <groupId>com.youkol.support.shiro</groupId>
+  <artifactId>shiro-support</artifactId>
   <version>1.0.9-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>youkol-support-shiro</name>
+  <name>shiro support</name>
+  <description>A simple Shiro extension library.</description>
   <url>https://github.com/youkol/youkol-support-shiro</url>
+
+  <inceptionYear>2016</inceptionYear>
 
   <licenses>
     <license>
@@ -30,10 +34,18 @@
     <tag>HEAD</tag>
   </scm>
 
+  <issueManagement>
+    <system>GitHub Issue Management</system>
+    <url>https://github.com/youkol/youkol-support-shiro/issues</url>
+  </issueManagement>
+
   <properties>
-    <shiro.version>1.4.0</shiro.version>
+    <shiro.version>1.5.1</shiro.version>
     <java-jwt.version>3.8.0</java-jwt.version>
-    <jackson.version>2.9.8</jackson.version>
+    <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
+
+    <!-- Maven plugin -->
+    <lombok.maven.version>1.18.10.0</lombok.maven.version>
   </properties>
 
   <dependencies>
@@ -51,23 +63,24 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-web</artifactId>
+      <artifactId>shiro-spring-boot-web-starter</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <!-- @ConfigurationProperties annotation processing (metadata for IDEs) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context-support</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure-processor</artifactId>
       <optional>true</optional>
     </dependency>
   </dependencies>
@@ -80,50 +93,20 @@
         <artifactId>java-jwt</artifactId>
         <version>${java-jwt.version}</version>
       </dependency>
+      <!-- Spring Boot -->
       <dependency>
-				<groupId>com.fasterxml.jackson</groupId>
-				<artifactId>jackson-bom</artifactId>
-				<version>${jackson.version}</version>
-				<scope>import</scope>
-				<type>pom</type>
-			</dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <!-- Shiro security -->
-      <dependency>
-        <groupId>org.apache.shiro</groupId>
-        <artifactId>shiro-core</artifactId>
-        <version>${shiro.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.shiro</groupId>
-        <artifactId>shiro-web</artifactId>
-        <version>${shiro.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.shiro</groupId>
-        <artifactId>shiro-cas</artifactId>
-        <version>${shiro.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.shiro</groupId>
-        <artifactId>shiro-spring</artifactId>
-        <version>${shiro.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.shiro</groupId>
-        <artifactId>shiro-cache</artifactId>
-        <version>${shiro.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.shiro</groupId>
-        <artifactId>shiro-guice</artifactId>
-        <version>${shiro.version}</version>
-      </dependency>
       <dependency>
         <groupId>org.apache.shiro</groupId>
         <artifactId>shiro-spring-boot-web-starter</artifactId>
         <version>${shiro.version}</version>
       </dependency>
-      <!-- end of Shiro security -->
     </dependencies>
   </dependencyManagement>
 
@@ -134,6 +117,7 @@
       <plugin>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok-maven-plugin</artifactId>
+        <version>1.18.10.0</version>
         <executions>
           <execution>
             <id>delombok</id>
@@ -143,7 +127,7 @@
             </goals>
             <configuration>
               <addOutputDirectory>false</addOutputDirectory>
-              <sourceDirectory>src/main/java</sourceDirectory>
+              <sourceDirectory>${project.basedir}src/main/java</sourceDirectory>
             </configuration>
           </execution>
           <execution>
@@ -154,7 +138,7 @@
 						</goals>
 						<configuration>
 							<addOutputDirectory>false</addOutputDirectory>
-							<sourceDirectory>src/test/java</sourceDirectory>
+							<sourceDirectory>${project.basedir}/src/test/java</sourceDirectory>
 						</configuration>
 					</execution>
         </executions>
