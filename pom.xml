@@ -45,7 +45,7 @@
     <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
 
     <!-- Maven plugin -->
-    <lombok.maven.version>1.18.10.0</lombok.maven.version>
+    <lombok-maven-plugin.version>1.18.10.0</lombok-maven-plugin.version>
   </properties>
 
   <dependencies>
@@ -117,31 +117,31 @@
       <plugin>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok-maven-plugin</artifactId>
-        <version>1.18.10.0</version>
-          <executions>
-            <execution>
-              <id>delombok</id>
-              <phase>generate-sources</phase>
-              <goals>
-                <goal>delombok</goal>
-              </goals>
-              <configuration>
-                <addOutputDirectory>false</addOutputDirectory>
-                <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-              </configuration>
-            </execution>
-            <execution>
-              <id>test-delombok</id>
-              <phase>generate-test-sources</phase>
-              <goals>
-                <goal>testDelombok</goal>
-              </goals>
-              <configuration>
-                <addOutputDirectory>false</addOutputDirectory>
-                <sourceDirectory>${project.basedir}/src/test/java</sourceDirectory>
-              </configuration>
-            </execution>
-          </executions>
+        <version>${lombok-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>delombok</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>delombok</goal>
+            </goals>
+            <configuration>
+              <addOutputDirectory>false</addOutputDirectory>
+              <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>test-delombok</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>testDelombok</goal>
+            </goals>
+            <configuration>
+              <addOutputDirectory>false</addOutputDirectory>
+              <sourceDirectory>${project.basedir}/src/test/java</sourceDirectory>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
