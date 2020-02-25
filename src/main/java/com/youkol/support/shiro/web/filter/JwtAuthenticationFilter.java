@@ -35,11 +35,20 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ *
+ * @deprecated
+ * 不再推荐使用，shiro1.5之后，增加了HTTP Bearer protocol相关实现，
+ * 具体使用请参见https://github.com/apache/shiro
+ *
+ * @see org.apache.shiro.web.filter.authc.BearerHttpAuthenticationFilter
+ * @see org.apache.shiro.authc.BearerToken
+ *
  * @author jackiea
  */
 @Slf4j
 @Setter
 @Getter
+@Deprecated
 public class JwtAuthenticationFilter extends BasicHttpAuthenticationFilter {
 
     private String authcScheme = "BEARER";

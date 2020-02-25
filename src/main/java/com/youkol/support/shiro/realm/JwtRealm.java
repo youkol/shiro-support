@@ -30,15 +30,26 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
+ * @deprecated
+ * 
  * @author jackiea
  */
+@Deprecated
 public class JwtRealm extends AuthorizingRealm {
 
-    @Autowired
+    @Getter
+    @Setter
     private JwtUserService jwtUserService;
+
+    public JwtRealm(JwtUserService userService) {
+        super();
+        this.jwtUserService = userService;
+    }
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -77,5 +88,5 @@ public class JwtRealm extends AuthorizingRealm {
                 username, upToken, getName());
         return authenticationInfo;
     }
-    
+
 }

@@ -36,5 +36,5 @@ public class JwtUserAccount extends DefaultUserAccount {
     private String token;
 
     private boolean tokenCorrect;
-    
+
 }

@@ -18,9 +18,10 @@ package com.youkol.support.shiro.authc;
 import org.apache.shiro.authc.AuthenticationException;
 
 /**
- * 
+ *
  * @author jackiea
  */
+@Deprecated
 public class IncorrectTokenException extends AuthenticationException {
 
     private static final long serialVersionUID = 1L;

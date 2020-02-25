@@ -86,9 +86,9 @@ public class FormTokenFilter extends FormAuthenticationFilter {
             return token;
         } catch (IOException ex) {
             log.error("Json from request parse error.", ex);
-           
+
         }
-        
+
         UsernamePasswordToken token = new UsernamePasswordToken();
         token.setHost(host);
         token.setRememberMe(rememberMe);

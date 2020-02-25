@@ -73,7 +73,7 @@ public interface JwtUserService extends UserService {
             JWTVerifier verifier = verification
                 .withClaim("username", username)
                 .build();
-            
+
             verifier.verify(token);
             return true;
         } catch (JWTVerificationException ex) {

@@ -22,8 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 使用Spring管理cache
- * 
+ * The spring-cache implementation for shiro cache manager
+ *
  * @author jackiea
  */
 public class SpringCacheManager implements CacheManager {
@@ -51,7 +51,7 @@ public class SpringCacheManager implements CacheManager {
 
         try {
             org.springframework.cache.Cache springCache = this.cacheManager.getCache(name);
-        
+
             if (logger.isInfoEnabled()) {
                 logger.info("Using Spring Cache named [" + springCache.getName() + "]");
             }

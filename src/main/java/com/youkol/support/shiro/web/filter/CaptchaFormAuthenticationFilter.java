@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
+ *
  * @author jackiea
  */
 public class CaptchaFormAuthenticationFilter extends FormAuthenticationFilter {
@@ -75,7 +75,7 @@ public class CaptchaFormAuthenticationFilter extends FormAuthenticationFilter {
         String captcha = getCaptcha(request);
         boolean rememberMe = isRememberMe(request);
         String host = getHost(request);
-        
+
         return new CaptchaUsernamePasswordToken(username, password, rememberMe, host, captcha);
     }
 
@@ -87,7 +87,7 @@ public class CaptchaFormAuthenticationFilter extends FormAuthenticationFilter {
                     "must be created in order to execute a login attempt.";
             throw new IllegalStateException(msg);
         }
-        
+
         try {
             doCaptchaValidate((HttpServletRequest)request, token);
 
@@ -169,7 +169,7 @@ public class CaptchaFormAuthenticationFilter extends FormAuthenticationFilter {
 
     /**
      * 验证码校验
-     * 
+     *
      * @param request 请求
      * @param token 身份验证令牌
      */

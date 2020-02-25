@@ -22,11 +22,20 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
+ * @deprecated
+ * No longer recommended to use this class.
+ * After shiro1.5，shiro already added HTTP Bearer protocol related implementation,
+ * Get more information, please go to https://github.com/apache/shiro
+ *
+ * @see org.apache.shiro.web.filter.authc.BearerHttpAuthenticationFilter
+ * @see org.apache.shiro.authc.BearerToken
+ *
  * @author jackiea
  */
 @Getter
 @Setter
 @ToString(callSuper = true)
+@Deprecated
 public class JwtAuthenticationToken implements HostAuthenticationToken {
 
     private static final long serialVersionUID = 1L;
@@ -60,5 +69,5 @@ public class JwtAuthenticationToken implements HostAuthenticationToken {
     public Object getCredentials() {
         return getToken();
     }
-    
+
 }

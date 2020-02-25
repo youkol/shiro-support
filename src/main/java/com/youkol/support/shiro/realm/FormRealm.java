@@ -30,15 +30,23 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author jackiea
  */
 public class FormRealm extends AuthorizingRealm {
 
-    @Autowired
+    @Getter
+    @Setter
     private UserService userService;
+
+    public FormRealm(UserService userService) {
+        super();
+        this.userService = userService;
+    }
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -70,7 +78,7 @@ public class FormRealm extends AuthorizingRealm {
         String password = account.getPassword();
         String salt = userService.getSalt(account);
         ByteSource credentialsSalt = ByteSource.Util.bytes(salt);
-        
+
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 username, password, credentialsSalt, getName());
         return authenticationInfo;

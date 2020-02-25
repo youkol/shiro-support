@@ -25,8 +25,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache.ValueWrapper;
 
 /**
- * Shiro中cache的spring-cache实现
- * 
+ * The spring-cache implementation for shiro cache
+ *
  * @author jackiea
  */
 public class SpringCache<K, V> implements Cache<K, V> {

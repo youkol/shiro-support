@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Web 应用工具类
- * 
+ *
  * @author jackiea
  */
 public class WebTools {
@@ -29,7 +29,7 @@ public class WebTools {
     /**
      * 返回客户端请求IP地址
      * 对于通过多个代理的情况，返回第一个IP地址
-     * 
+     *
      * @param request 请求信息
      * @return 返回包含客户端请求IP地址的字符串
      */
@@ -62,7 +62,7 @@ public class WebTools {
 
     /**
      * 判断请求是否为Ajax请求
-     * 
+     *
      * @param request 请求信息
      * @return 如果是ajax请求，则返回true，否则返回false
      */
