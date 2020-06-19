@@ -32,9 +32,17 @@ public interface JwtTokenService {
 
     public static final long TOKEN_EXPIRED_TIME = 24 * 60 * 60 * 1000;
 
+    public static final String DEFAULT_ISSUER = "youkol.com";
+
     public static final String USERID_KEY = "userId";
 
     public static final String USERNAME_KEY = "username";
+
+    String getSharedSecret();
+
+    default String getIssuer() {
+        return DEFAULT_ISSUER;
+    }
 
     /**
      * Returns the token expired time.

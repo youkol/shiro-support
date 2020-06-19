@@ -49,11 +49,6 @@ public class DefaultJwtTokenService extends AbstractJwtTokenService {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultJwtTokenService.class);
 
-    private static final String DEFAULT_ISSUER = "youkol.com";
-
-    private String issuer = DEFAULT_ISSUER;
-
-    private String sharedSecret;
 
     protected byte[] getSecretKey(UserAccount userAccount) throws KeyLengthException {
         String secret = "";
@@ -185,19 +180,4 @@ public class DefaultJwtTokenService extends AbstractJwtTokenService {
         return null;
     }
 
-    public String getIssuer() {
-        return issuer;
-    }
-
-    public void setIssuer(String issuer) {
-        this.issuer = issuer;
-    }
-
-    public String getSharedSecret() {
-        return sharedSecret;
-    }
-
-    public void setSharedSecret(String sharedSecret) {
-        this.sharedSecret = sharedSecret;
-    }
 }

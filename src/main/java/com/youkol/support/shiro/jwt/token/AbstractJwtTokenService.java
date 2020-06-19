@@ -37,6 +37,12 @@ public abstract class AbstractJwtTokenService implements JwtTokenService {
 
     private String permsKey = PERMS_KEY;
 
+    private long expireTime = JwtTokenService.TOKEN_EXPIRED_TIME;
+
+    private String issuer = DEFAULT_ISSUER;
+
+    private String sharedSecret;
+
     protected Map<String, Object> combineClaims(UserAccount userAccount, Map<String, Object> otherClaims) {
         Map<String, Object> claims = new HashMap<>();
         if (otherClaims != null) {
@@ -84,6 +90,33 @@ public abstract class AbstractJwtTokenService implements JwtTokenService {
 
     public void setPermsKey(String permsKey) {
         this.permsKey = permsKey;
+    }
+
+    @Override
+    public long getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(long expireTime) {
+        this.expireTime = expireTime;
+    }
+
+    @Override
+    public String getIssuer() {
+        return issuer;
+    }
+
+    public void setIssuer(String issuer) {
+        this.issuer = issuer;
+    }
+
+    @Override
+    public String getSharedSecret() {
+        return sharedSecret;
+    }
+
+    public void setSharedSecret(String sharedSecret) {
+        this.sharedSecret = sharedSecret;
     }
 
 }
