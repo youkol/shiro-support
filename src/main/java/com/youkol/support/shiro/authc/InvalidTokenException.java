@@ -21,24 +21,23 @@ import org.apache.shiro.authc.AuthenticationException;
  *
  * @author jackiea
  */
-@Deprecated
-public class IncorrectTokenException extends AuthenticationException {
+public class InvalidTokenException extends AuthenticationException {
 
     private static final long serialVersionUID = 1L;
 
-    public IncorrectTokenException() {
+    public InvalidTokenException() {
         super();
     }
 
-    public IncorrectTokenException(String message, Throwable cause) {
+    public InvalidTokenException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public IncorrectTokenException(String message) {
+    public InvalidTokenException(String message) {
         super(message);
     }
 
-    public IncorrectTokenException(Throwable cause) {
+    public InvalidTokenException(Throwable cause) {
         super(cause);
     }
 }

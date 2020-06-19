@@ -33,7 +33,7 @@
 
   <name>shiro support</name>
   <description>A simple Shiro extension library.</description>
-  <url>https://github.com/youkol/youkol-support-shiro</url>
+  <url>https://github.com/youkol/shiro-support</url>
 
   <inceptionYear>2016</inceptionYear>
 
@@ -45,59 +45,39 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git://github.com/youkol/youkol-support-shiro.git</connection>
-    <developerConnection>scm:git:git@github.com:youkol/youkol-support-shiro.git</developerConnection>
-    <url>https://github.com/youkol/youkol-support-shiro</url>
+    <connection>scm:git:git://github.com/youkol/shiro-support.git</connection>
+    <developerConnection>scm:git:git@github.com:youkol/shiro-support.git</developerConnection>
+    <url>https://github.com/youkol/shiro-support</url>
     <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
     <system>GitHub Issue Management</system>
-    <url>https://github.com/youkol/youkol-support-shiro/issues</url>
+    <url>https://github.com/youkol/shiro-support/issues</url>
   </issueManagement>
 
   <properties>
-    <shiro.version>1.5.1</shiro.version>
+    <shiro.version>1.5.3</shiro.version>
     <java-jwt.version>3.8.0</java-jwt.version>
     <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
+    <nimbus-jose-jwt.version>8.8</nimbus-jose-jwt.version>
 
-    <!-- Maven plugin -->
-    <lombok-maven-plugin.version>1.18.10.0</lombok-maven-plugin.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>com.auth0</groupId>
       <artifactId>java-jwt</artifactId>
+      <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <scope>provided</scope>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-spring-boot-web-starter</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <!-- @ConfigurationProperties annotation processing (metadata for IDEs) -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-autoconfigure-processor</artifactId>
       <optional>true</optional>
     </dependency>
   </dependencies>
@@ -109,6 +89,11 @@
         <groupId>com.auth0</groupId>
         <artifactId>java-jwt</artifactId>
         <version>${java-jwt.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.nimbusds</groupId>
+        <artifactId>nimbus-jose-jwt</artifactId>
+        <version>${nimbus-jose-jwt.version}</version>
       </dependency>
       <!-- Spring Boot -->
       <dependency>
@@ -126,41 +111,5 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <build>
-    <!-- <sourceDirectory>${project.build.directory}/generated-sources/delombok</sourceDirectory>
-    <testSourceDirectory>${project.build.directory}/generated-test-sources/delombok</testSourceDirectory> -->
-    <plugins>
-      <plugin>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok-maven-plugin</artifactId>
-        <version>${lombok-maven-plugin.version}</version>
-        <executions>
-          <execution>
-            <id>delombok</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>delombok</goal>
-            </goals>
-            <configuration>
-              <addOutputDirectory>false</addOutputDirectory>
-              <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>test-delombok</id>
-            <phase>generate-test-sources</phase>
-            <goals>
-              <goal>testDelombok</goal>
-            </goals>
-            <configuration>
-              <addOutputDirectory>false</addOutputDirectory>
-              <sourceDirectory>${project.basedir}/src/test/java</sourceDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
 </project>

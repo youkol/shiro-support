@@ -13,20 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.youkol.support.shiro.service;
-
-import org.apache.shiro.authc.UnknownAccountException;
+package com.youkol.support.shiro.jwt.token.exception;
 
 /**
+ *
  * @author jackiea
  */
-public interface UserService {
+public class IllegalJwtTokenException extends JwtTokenException {
 
-    /**
-     *
-     * @param username the username is the user-unique identity.
-     * @return user record.
-     * @throws UnknownAccountException when a principal that doesn't exist in the system
-     */
-    UserAccount findByUsername(String username) throws UnknownAccountException;
+    private static final long serialVersionUID = 1L;
+
+    public IllegalJwtTokenException() {
+        super();
+    }
+
+    public IllegalJwtTokenException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public IllegalJwtTokenException(String message) {
+        super(message);
+    }
+
+    public IllegalJwtTokenException(Throwable cause) {
+        super(cause);
+    }
 }

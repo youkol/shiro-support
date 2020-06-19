@@ -13,28 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.youkol.support.shiro.service;
+package com.youkol.support.shiro.jwt;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
+import com.youkol.support.shiro.service.UserAccount;
+import com.youkol.support.shiro.service.UserService;
+
+import org.apache.shiro.authc.UnknownAccountException;
 
 /**
  * @author jackiea
  */
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@SuperBuilder
-public class JwtUserAccount extends DefaultUserAccount {
+public interface JwtUserService extends UserService {
 
-    private static final long serialVersionUID = 1L;
-
-    private String token;
-
-    private boolean tokenCorrect;
-
+    UserAccount findByToken(String token) throws UnknownAccountException;
 }

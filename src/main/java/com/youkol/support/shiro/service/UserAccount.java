@@ -16,23 +16,104 @@
 package com.youkol.support.shiro.service;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
+ * Provides user information.
+ *
  * @author jackiea
  */
 public interface UserAccount extends Serializable {
 
+    /**
+     * Returns user owned roles.
+     *
+     * @return Collection of user roles.
+     */
+    Set<String> getRoles();
+
+    /**
+     * Returns user owned permissions.
+     *
+     * @return Collection of user roles.
+     */
+    Set<String> getPermissions();
+
+    /**
+     * Returns the user id.
+     *
+     * @return the user id
+     */
     String getUserId();
 
+    /**
+     * Returns the username.
+     *
+     * @return the username
+     */
     String getUsername();
 
+    /**
+     * Returns the password.
+     *
+     * @return the password
+     */
     String getPassword();
 
+    /**
+     * Returns the password salt to encode password.
+     *
+     * @return the salt, if need
+     */
     String getSalt();
 
+    /**
+     * Returns the user status.
+     * ie: LOCKED, EXPIRED, ENABLED, DISABLED etc.
+     *
+     * @return the user status
+     */
     String getStatus();
 
+    /**
+     * Indicates whether the user's credentials (password) has correct.
+     * If you check the credentials has corrent in your owner service,
+     * you must set this value for other service to used.
+     *
+     * @return <code>true</code>, if the user's credentials are correct.
+     *         <code>false</code>, if not corrent.
+     */
     boolean isCredentialsCorrect();
 
-    boolean isCredentialsExpired();
+    /**
+     * Indicates whether the user's credentials (password) has expired.
+     *
+     * @return <code>true</code>, if the user's credentials are valid.
+     *         <code>false</code>, if no longer valid.
+     */
+    boolean isCredentialsNonExpired();
+
+    /**
+     * Indicates whether the user's account has expired.
+     *
+     * @return <code>true</code> if the user's account is valid (ie non-expired),
+	 *         <code>false</code> if no longer valid (ie expired)
+     */
+    boolean isAccountNonExpired();
+
+    /**
+     * Indicates whether the user is locked or unlocked.
+     *
+     * @return <code>true</code>, if the user is not locked,
+     *         <code>false</code> otherwise
+     */
+    boolean isAccountNonLocked();
+
+    /**
+     * Indicates whether the user is enabled or disabled.
+     *
+     * @return <code>true</code> if the user is enabled,
+     *         <code>false</code> otherwise
+     */
+    boolean isEnabled();
 }

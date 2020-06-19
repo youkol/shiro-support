@@ -13,49 +13,56 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.youkol.support.shiro.realm;
+package com.youkol.support.shiro.jwt.realm;
 
 import java.util.Set;
 
-import com.youkol.support.shiro.io.CustomByteSource;
+import com.youkol.support.shiro.authc.ExpiredTokenException;
+import com.youkol.support.shiro.authc.InvalidTokenException;
+import com.youkol.support.shiro.jwt.JwtUserService;
+import com.youkol.support.shiro.jwt.token.JwtTokenService;
+import com.youkol.support.shiro.jwt.token.exception.ExpiredJwtTokenException;
+import com.youkol.support.shiro.jwt.token.exception.IllegalJwtTokenException;
 import com.youkol.support.shiro.service.UserAccount;
-import com.youkol.support.shiro.service.UserService;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.BearerToken;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
 
 /**
+ *
  * @author jackiea
  */
-public class FormRealm extends AuthorizingRealm {
+public class JwtRealm extends AuthorizingRealm {
 
-    private UserService userService;
+    private JwtUserService userService;
 
-    public FormRealm() {
+    private JwtTokenService tokenService;
+
+    public JwtRealm() {
         super();
     }
 
-    public FormRealm(UserService userService) {
+    public JwtRealm(JwtUserService userService, JwtTokenService tokenService) {
         super();
         this.userService = userService;
+        this.tokenService = tokenService;
     }
 
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token != null && token instanceof UsernamePasswordToken;
+        return token != null && token instanceof BearerToken;
     }
 
     // multi realm situation.
@@ -69,12 +76,12 @@ public class FormRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String username = (String)getPrincipal(principals);
-        if (username == null) {
+        String token = (String)getPrincipal(principals);
+        if (token == null) {
             return null;
         }
 
-        UserAccount account = userService.findByUsername(username);
+        UserAccount account = userService.findByToken(token);
         Set<String> roles = account.getRoles();
         Set<String> perms = account.getPermissions();
 
@@ -86,9 +93,10 @@ public class FormRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+        BearerToken jwtToken = (BearerToken) token;
+        String currentToken = jwtToken.getToken();
 
-        UserAccount account = userService.findByUsername(upToken.getUsername());
+        UserAccount account = userService.findByToken(currentToken);
         if (account == null) {
             throw new UnknownAccountException("The account doesn't exist.");
         }
@@ -105,35 +113,41 @@ public class FormRealm extends AuthorizingRealm {
             throw new ExpiredCredentialsException("The account credentials is expired.");
         }
 
-        String username = account.getUsername();
-        String password = account.getPassword();
-        
-        String passwordSalt = this.getPasswordSalt(account);
-        ByteSource credentialsSalt = new CustomByteSource(passwordSalt);
+        // According to the actual situation, directly verify the legitimacy of token,
+        // and then make user information query.
+        // Make validate token before query user infomation, it can reduce database query.
+        boolean bValid = false;
+        try {
+            bValid = tokenService.validateToken(currentToken, account);
+        } catch (IllegalJwtTokenException ex) {
+            throw new InvalidTokenException("The token is illegal.");
+        } catch (ExpiredJwtTokenException ex) {
+            throw new ExpiredTokenException("The token is expired.", ex);
+        }
+
+        if (!bValid) {
+            throw new InvalidTokenException("The token is invalidation.");
+        }
 
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                username, password, credentialsSalt, getName());
+            jwtToken.getPrincipal(), jwtToken.getCredentials(), getName());
         return authenticationInfo;
     }
 
-    public UserService getUserService() {
+    public JwtUserService getUserService() {
         return userService;
     }
 
-    public void setUserService(UserService userService) {
+    public void setUserService(JwtUserService userService) {
         this.userService = userService;
     }
 
-    protected String getPasswordSalt(UserAccount account) {
-        StringBuilder salt = new StringBuilder();
-        if (account.getUsername() != null) {
-            salt.append(account.getUsername());
-        }
-        if (account.getSalt() != null) {
-            salt.append(account.getSalt());
-        }
+    public JwtTokenService getTokenService() {
+        return tokenService;
+    }
 
-        return salt.toString();
+    public void setTokenService(JwtTokenService tokenService) {
+        this.tokenService = tokenService;
     }
 
 }
