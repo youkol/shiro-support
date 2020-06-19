@@ -69,7 +69,7 @@ public class FormRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String username = (String)getPrincipal(principals);
+        String username = (String) getPrincipal(principals);
         if (username == null) {
             return null;
         }

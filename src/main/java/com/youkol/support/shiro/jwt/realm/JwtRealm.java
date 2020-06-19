@@ -76,7 +76,7 @@ public class JwtRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String token = (String)getPrincipal(principals);
+        String token = (String) getPrincipal(principals);
         if (token == null) {
             return null;
         }
