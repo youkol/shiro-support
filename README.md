@@ -14,3 +14,11 @@ A simple Shiro extension library.
     <version>1.1.0</version>
 </dependency>
 ```
+For spring boot autoconfigure
+```xml
+<dependency>
+    <groupId>com.youkol.support.shiro</groupId>
+    <artifactId>shiro-support-spring-boot-starter</artifactId>
+    <version>1.1.0</version>
+</dependency>
+```
