@@ -1,0 +1,5 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.youkol.support.shiro.spring.autoconfigure.ShiroJwtAutoConfiguration,\
+com.youkol.support.shiro.spring.autoconfigure.ShiroSpringCacheAutoConfiguration,\
+com.youkol.support.shiro.spring.autoconfigure.ShiroSupportAutoConfiguration

@@ -27,11 +27,11 @@
   </parent>
 
   <groupId>com.youkol.support.shiro</groupId>
-  <artifactId>shiro-support</artifactId>
+  <artifactId>shiro-support-parent</artifactId>
   <version>1.0.9-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
-  <name>shiro support</name>
+  <name>YOUKOL::shiro-support-parent</name>
   <description>A simple Shiro extension library.</description>
   <url>https://github.com/youkol/shiro-support</url>
 
@@ -56,31 +56,17 @@
     <url>https://github.com/youkol/shiro-support/issues</url>
   </issueManagement>
 
+  <modules>
+    <module>shiro-support</module>
+    <module>shiro-support-spring-boot-starter</module>
+  </modules>
+
   <properties>
     <shiro.version>1.5.3</shiro.version>
     <java-jwt.version>3.8.0</java-jwt.version>
     <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
     <nimbus-jose-jwt.version>8.8</nimbus-jose-jwt.version>
-
   </properties>
-
-  <dependencies>
-    <dependency>
-      <groupId>com.auth0</groupId>
-      <artifactId>java-jwt</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>com.nimbusds</groupId>
-      <artifactId>nimbus-jose-jwt</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-spring-boot-web-starter</artifactId>
-      <optional>true</optional>
-    </dependency>
-  </dependencies>
 
   <dependencyManagement>
     <dependencies>
