@@ -23,6 +23,7 @@ import com.youkol.support.shiro.jwt.token.DefaultJwtTokenService;
 import com.youkol.support.shiro.jwt.token.JwtTokenService;
 
 import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.config.web.autoconfigure.ShiroWebAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -34,7 +35,7 @@ import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @AutoConfigureBefore(ShiroWebAutoConfiguration.class)
 @AutoConfigureAfter(ShiroSpringCacheAutoConfiguration.class)
 @EnableConfigurationProperties(ShiroJwtProperties.class)
@@ -62,7 +63,7 @@ public class ShiroJwtAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnBean(JwtUserService.class)
-    public JwtRealm jwtRealm(JwtTokenService tokenService, JwtUserService userService, Optional<CacheManager> cacheManager) {
+    public Realm jwtRealm(JwtTokenService tokenService, JwtUserService userService, Optional<CacheManager> cacheManager) {
         JwtRealm realm = new JwtRealm(userService, tokenService);
 
         cacheManager.ifPresent(t -> realm.setAuthenticationCachingEnabled(true));
