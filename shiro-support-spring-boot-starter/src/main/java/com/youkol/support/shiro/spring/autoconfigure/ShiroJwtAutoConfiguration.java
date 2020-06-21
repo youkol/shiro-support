@@ -50,7 +50,7 @@ public class ShiroJwtAutoConfiguration {
         map.from(properties::getSharedSecret).to(jwtTokenService::setSharedSecret);
 
         map.from(properties::getIssuer).to(jwtTokenService::setIssuer);
-        map.from(properties::getUserIdKey).to(jwtTokenService::setUserIdKey);
+        map.from(properties::getUseridKey).to(jwtTokenService::setUserIdKey);
         map.from(properties::getUsernameKey).to(jwtTokenService::setUsernameKey);
         map.from(properties::getRolesKey).to(jwtTokenService::setRolesKey);
         map.from(properties::getPermsKey).to(jwtTokenService::setPermsKey);

@@ -30,7 +30,7 @@ public class ShiroJwtProperties {
 
     private String issuer;
 
-    private String userIdKey;
+    private String useridKey;
 
     private String usernameKey;
 
@@ -70,12 +70,12 @@ public class ShiroJwtProperties {
     @DurationUnit(ChronoUnit.SECONDS)
     private Duration expireTime = Duration.ofDays(1);
 
-    public String getUserIdKey() {
-        return userIdKey;
+    public String getUseridKey() {
+        return useridKey;
     }
 
-    public void setUserIdKey(String userIdKey) {
-        this.userIdKey = userIdKey;
+    public void setUseridKey(String useridKey) {
+        this.useridKey = useridKey;
     }
 
     public String getUsernameKey() {
