@@ -1,0 +1,23 @@
+{
+    "properties": [
+      {
+        "name": "youkol.shiro.spring-cache.enabled",
+        "type": "java.lang.Boolean",
+        "description": "A boolean flag that can disable create SpringCacheManager bean.",
+        "defaultValue": true
+      }
+    ],
+    "hints": [
+      {
+        "name": "youkol.shiro.spring-cache.enabled",
+        "values": [
+          {
+            "value": true
+          },
+          {
+            "value": false
+          }
+        ]
+      }
+    ]
+  }
