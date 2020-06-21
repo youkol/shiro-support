@@ -32,11 +32,10 @@ import org.springframework.context.annotation.Configuration;
 public class ShiroSpringCacheAutoConfiguration {
     
     /**
-     * 使用spring的cache缓存配置
      * Use Spring CacheManager for Shiro CacheManager
      *
-     * @param cacheManager spring的cacheManager
-     * @return 如果为配置cacheManager时，返回null，否则返回对应shiro-cache封装的SpringCacheManager
+     * @param cacheManager spring cacheManager
+     * @return A wapper SpringCacheManager for shiro-cache
      */
     @Bean(name = "springCacheManager")
     @ConditionalOnMissingBean
