@@ -1,4 +1,9 @@
 # shiro-support
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.youkol.support.shiro/shiro-support-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.youkol.support.shiro/shiro-support-parent)
+[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/com.youkol.support.shiro/shiro-support-parent?server=https%3A%2F%2Foss.sonatype.org)](https://oss.sonatype.org/content/repositories/snapshots/com/youkol/support/shiro/shiro-support-parent/)
+[![License](https://img.shields.io/badge/license-apache-brightgreen)](http://www.apache.org/licenses/LICENSE-2.0.html)
+
 A simple Shiro extension library.
 
 ### 1. Add Supports
