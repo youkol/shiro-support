@@ -28,7 +28,7 @@
 
   <groupId>com.youkol.support.shiro</groupId>
   <artifactId>shiro-support-parent</artifactId>
-  <version>1.0.9-SNAPSHOT</version>
+  <version>1.0.9</version>
   <packaging>pom</packaging>
 
   <name>YOUKOL::shiro-support-parent</name>
@@ -48,7 +48,7 @@
     <connection>scm:git:git://github.com/youkol/shiro-support.git</connection>
     <developerConnection>scm:git:git@github.com:youkol/shiro-support.git</developerConnection>
     <url>https://github.com/youkol/shiro-support</url>
-    <tag>HEAD</tag>
+    <tag>v1.0.9</tag>
   </scm>
 
   <issueManagement>
