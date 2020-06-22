@@ -16,7 +16,7 @@ A simple Shiro extension library.
 <dependency>
     <groupId>com.youkol.support.shiro</groupId>
     <artifactId>shiro-support</artifactId>
-    <version>1.1.0</version>
+    <version>1.0.9</version>
 </dependency>
 ```
 For spring boot autoconfigure
@@ -24,6 +24,6 @@ For spring boot autoconfigure
 <dependency>
     <groupId>com.youkol.support.shiro</groupId>
     <artifactId>shiro-support-spring-boot-starter</artifactId>
-    <version>1.1.0</version>
+    <version>1.0.9</version>
 </dependency>
 ```
