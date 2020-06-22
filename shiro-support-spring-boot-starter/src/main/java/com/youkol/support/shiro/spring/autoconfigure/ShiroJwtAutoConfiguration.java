@@ -61,7 +61,7 @@ public class ShiroJwtAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(name = "jwtRealm")
     @ConditionalOnBean(JwtUserService.class)
     public Realm jwtRealm(JwtTokenService tokenService, JwtUserService userService, Optional<CacheManager> cacheManager) {
         JwtRealm realm = new JwtRealm(userService, tokenService);
