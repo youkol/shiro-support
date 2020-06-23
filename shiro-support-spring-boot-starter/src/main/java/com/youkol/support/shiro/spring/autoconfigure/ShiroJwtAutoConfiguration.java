@@ -19,7 +19,6 @@ import java.util.Optional;
 
 import com.youkol.support.shiro.jwt.JwtUserService;
 import com.youkol.support.shiro.jwt.realm.JwtRealm;
-import com.youkol.support.shiro.jwt.token.DefaultJwtTokenService;
 import com.youkol.support.shiro.jwt.token.JwtTokenService;
 
 import org.apache.shiro.cache.CacheManager;
@@ -31,38 +30,21 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
 @AutoConfigureBefore(ShiroWebAutoConfiguration.class)
 @AutoConfigureAfter(ShiroSpringCacheAutoConfiguration.class)
 @EnableConfigurationProperties(ShiroJwtProperties.class)
 @ConditionalOnProperty(name = "youkol.shiro.jwt.enabled", matchIfMissing = true)
+@Import(ShiroJwtTokenServiceConfiguration.class)
 public class ShiroJwtAutoConfiguration {
     
     @Bean
-    @ConditionalOnMissingBean
-    public JwtTokenService jwtTokenService(ShiroJwtProperties properties) {
-        DefaultJwtTokenService jwtTokenService = new DefaultJwtTokenService();
-
-        PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
-        map.from(properties::getSharedSecret).to(jwtTokenService::setSharedSecret);
-
-        map.from(properties::getIssuer).to(jwtTokenService::setIssuer);
-        map.from(properties::getUseridKey).to(jwtTokenService::setUserIdKey);
-        map.from(properties::getUsernameKey).to(jwtTokenService::setUsernameKey);
-        map.from(properties::getRolesKey).to(jwtTokenService::setRolesKey);
-        map.from(properties::getPermsKey).to(jwtTokenService::setPermsKey);
-        map.from(properties::getExpireTime).as(t -> t.getSeconds() * 1000L).to(jwtTokenService::setExpireTime);
-
-        return jwtTokenService;
-    }
-
-    @Bean
     @ConditionalOnMissingBean(name = "jwtRealm")
-    @ConditionalOnBean(JwtUserService.class)
+    @ConditionalOnBean({JwtTokenService.class, JwtUserService.class})
     public Realm jwtRealm(JwtTokenService tokenService, JwtUserService userService, Optional<CacheManager> cacheManager) {
         JwtRealm realm = new JwtRealm(userService, tokenService);
 

@@ -15,6 +15,8 @@
  */
 package com.youkol.support.shiro.jwt.token;
 
+import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +45,35 @@ public abstract class AbstractJwtTokenService implements JwtTokenService {
 
     private String sharedSecret;
 
+    protected byte[] getSecretKey(UserAccount userAccount) {
+        String secret = "";
+        if (this.getSharedSecret() != null) {
+            secret = secret + this.getSharedSecret();
+        }
+        if (userAccount != null) {
+            if (userAccount.getPassword() != null) {
+                secret = secret + userAccount.getPassword();
+            }
+            if (secret.isEmpty()) {
+                secret = userAccount.getUsername() + userAccount.getUserId();
+            }
+        }
+
+        if (secret.isEmpty()) {
+            // The secret. Must be at least 256 bits long and not null.
+            // Generate random 256*8-bit (32*8-byte) shared secret
+            SecureRandom random = new SecureRandom();
+            byte[] randomSecret = new byte[32 * 8];
+            random.nextBytes(randomSecret);
+
+            // put to sharedSecret
+            this.setSharedSecret(new String(randomSecret, StandardCharsets.UTF_8));
+            return randomSecret;
+        }
+
+        return secret.getBytes(StandardCharsets.UTF_8);
+    }
+
     protected Map<String, Object> combineClaims(UserAccount userAccount, Map<String, Object> otherClaims) {
         Map<String, Object> claims = new HashMap<>();
         if (otherClaims != null) {
@@ -60,6 +91,7 @@ public abstract class AbstractJwtTokenService implements JwtTokenService {
         return claims;
     }
 
+    @Override
     public String getUserIdKey() {
         return userIdKey;
     }
@@ -68,6 +100,7 @@ public abstract class AbstractJwtTokenService implements JwtTokenService {
         this.userIdKey = userIdKey;
     }
 
+    @Override
     public String getUsernameKey() {
         return usernameKey;
     }

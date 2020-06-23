@@ -15,7 +15,6 @@
  */
 package com.youkol.support.shiro.jwt.token;
 
-import java.security.SecureRandom;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
@@ -28,7 +27,6 @@ import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
-import com.nimbusds.jose.util.StandardCharset;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.youkol.support.shiro.jwt.token.exception.ExpiredJwtTokenException;
@@ -45,39 +43,9 @@ import org.slf4j.LoggerFactory;
  * @see <a href="https://bitbucket.org/connect2id/nimbus-jose-jwt/wiki/Home">https://bitbucket.org/connect2id/nimbus-jose-jwt/wiki/Home</a>
  * @author jackiea
  */
-public class DefaultJwtTokenService extends AbstractJwtTokenService {
+public class NimbusJwtTokenService extends AbstractJwtTokenService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DefaultJwtTokenService.class);
-
-
-    protected byte[] getSecretKey(UserAccount userAccount) throws KeyLengthException {
-        String secret = "";
-        if (this.getSharedSecret() != null) {
-            secret = secret + this.getSharedSecret();
-        }
-        if (userAccount != null) {
-            if (userAccount.getPassword() != null) {
-                secret = secret + userAccount.getPassword();
-            }
-            if (secret == null || secret.isEmpty()) {
-                secret = userAccount.getUsername() + userAccount.getUserId();
-            }
-        }
-
-        if (secret.isEmpty()) {
-            // The secret. Must be at least 256 bits long and not null.
-            // Generate random 256*8-bit (32*8-byte) shared secret
-            SecureRandom random = new SecureRandom();
-            byte[] randomSecret = new byte[32*8];
-            random.nextBytes(randomSecret);
-
-            // put to sharedSecret
-            this.setSharedSecret(new String(randomSecret, StandardCharset.UTF_8));
-            return randomSecret;
-        }
-
-        return secret.getBytes(StandardCharset.UTF_8);
-    }
+    private static final Logger logger = LoggerFactory.getLogger(NimbusJwtTokenService.class);
 
     protected JWSSigner getSigner(UserAccount userAccount) throws KeyLengthException {
         JWSSigner signer = new MACSigner(this.getSecretKey(userAccount));
