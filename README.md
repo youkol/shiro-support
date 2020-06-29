@@ -10,13 +10,16 @@ A simple Shiro extension library.
 * Spring cache-based implementations of Shiro's cache interfaces.
 * A simple username/password/captcha authentication token to support the most widely-used authentication mechanism.
 * Add JWT Support
+* Custom implementation inherited ModularRealmAuthenticator, and 
+  store the last AuthenticationException for multi realm.
+  Fix when use multi realm, lost the AuthenticationException info. 
 
 ### 2. Usage
 ```xml
 <dependency>
     <groupId>com.youkol.support.shiro</groupId>
     <artifactId>shiro-support</artifactId>
-    <version>1.0.10</version>
+    <version>${shiro-support.version}</version>
 </dependency>
 ```
 For spring boot autoconfigure
@@ -24,6 +27,6 @@ For spring boot autoconfigure
 <dependency>
     <groupId>com.youkol.support.shiro</groupId>
     <artifactId>shiro-support-spring-boot-starter</artifactId>
-    <version>1.0.10</version>
+    <version>${shiro-support.version}</version>
 </dependency>
 ```
