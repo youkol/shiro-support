@@ -17,10 +17,11 @@ package com.youkol.support.shiro.spring.autoconfigure;
 
 import java.util.stream.Collectors;
 
+import com.youkol.support.shiro.authc.pam.MultiRealmAuthenticator;
+
 import org.apache.shiro.authc.AuthenticationListener;
 import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authc.pam.AuthenticationStrategy;
-import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.spring.config.web.autoconfigure.ShiroWebAutoConfiguration;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -48,7 +49,7 @@ public class ShiroSupportAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     protected Authenticator authenticator(AuthenticationStrategy authenticationStrategy, ObjectProvider<AuthenticationListener> listeners) {
-        ModularRealmAuthenticator authenticator = new ModularRealmAuthenticator();
+        MultiRealmAuthenticator authenticator = new MultiRealmAuthenticator();
         authenticator.setAuthenticationStrategy(authenticationStrategy);
         authenticator.setAuthenticationListeners(listeners.orderedStream().collect(Collectors.toList()));
 
