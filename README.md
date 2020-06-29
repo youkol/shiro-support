@@ -16,17 +16,31 @@ A simple Shiro extension library.
 
 ### 2. Usage
 ```xml
-<dependency>
+<dependencies>
+  ...
+  <dependency>
     <groupId>com.youkol.support.shiro</groupId>
     <artifactId>shiro-support</artifactId>
     <version>${shiro-support.version}</version>
-</dependency>
+  </dependency>
+  ...
+</dependencies>
 ```
 For spring boot autoconfigure
 ```xml
-<dependency>
+<dependencies>
+  ...
+  <!-- Import the nimbus can auto configuration JwtTokenService bean  -->
+  <dependency>
+    <groupId>com.nimbusds</groupId>
+    <artifactId>nimbus-jose-jwt</artifactId>
+    <version>${nimbus-jose-jwt.version}</version>
+  </dependency>
+  <dependency>
     <groupId>com.youkol.support.shiro</groupId>
     <artifactId>shiro-support-spring-boot-starter</artifactId>
     <version>${shiro-support.version}</version>
-</dependency>
+  </dependency>
+  ...
+</dependencies>
 ```
